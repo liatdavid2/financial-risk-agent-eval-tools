@@ -1,0 +1,25 @@
+services:
+  api:
+    build: .
+    container_name: financial-risk-agent-api
+    ports:
+      - "8001:8000"
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      CACHE_TTL_SECONDS: 3600
+      RISK_MODEL_PATH: /app/models/risk_model.joblib
+      SIMILAR_CASES_INDEX_PATH: /app/models/similar_cases_index.joblib
+      USE_OPENAI: "false"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./reports:/app/reports
+    depends_on:
+      redis:
+        condition: service_started
+
+  redis:
+    image: redis:7-alpine
+    container_name: financial-risk-agent-redis
+    ports:
+      - "6379:6379"

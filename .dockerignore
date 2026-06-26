@@ -1,0 +1,18 @@
+.venv
+venv
+__pycache__
+*.pyc
+.pytest_cache
+.ruff_cache
+.git
+.gitignore
+.env
+*.zip
+
+# Mounted at runtime instead of baked into the image
+data/raw/*.csv
+data/processed/*.csv
+data/golden/*.jsonl
+models/*.joblib
+reports/*.json
+reports/evals/*.json

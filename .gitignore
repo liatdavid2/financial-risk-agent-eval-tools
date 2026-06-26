@@ -1,0 +1,25 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+.pytest_cache/
+.ruff_cache/
+
+# Do not commit private/large artifacts
+models/*.joblib
+models/*.json
+reports/*.json
+reports/evals/*.json
+data/raw/*.csv
+data/processed/*.csv
+data/golden/*.jsonl
+
+# Keep folder structure
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/golden/sample_golden_dataset.jsonl
+!models/.gitkeep
+!reports/.gitkeep
+!reports/evals/.gitkeep
