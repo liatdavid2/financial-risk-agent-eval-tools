@@ -9,15 +9,15 @@ def apply_policy(default_probability: float, rule_reasons: list[str], similar_ca
 
     evidence_score = len(rule_reasons)
 
-    # This demo is conservative: most risky cases go to manual review.
-    # Reject is reserved for very high model score + multiple deterministic signals.
-    if default_probability >= 0.78 and evidence_score >= 4:
-        decision = "reject"
+    # Production-safe policy:
+    # High-risk cases are escalated to manual review, not automatically rejected.
+    if default_probability >= 0.75 and evidence_score >= 3:
+        decision = "manual_review"
         risk_level = "very_high"
-    elif default_probability >= 0.45 or evidence_score >= 2 or similar_default_rate >= 0.5:
+    elif default_probability >= 0.35 or evidence_score >= 2 or similar_default_rate >= 0.4:
         decision = "manual_review"
         risk_level = "high"
-    elif default_probability >= 0.25 or evidence_score == 1:
+    elif default_probability >= 0.22 or evidence_score == 1:
         decision = "manual_review"
         risk_level = "medium"
     else:
@@ -28,5 +28,5 @@ def apply_policy(default_probability: float, rule_reasons: list[str], similar_ca
         "decision": decision,
         "risk_level": risk_level,
         "similar_default_rate": round(similar_default_rate, 3),
-        "policy_version": "credit-risk-policy-v1",
+        "policy_version": "credit-risk-policy-v2",
     }
